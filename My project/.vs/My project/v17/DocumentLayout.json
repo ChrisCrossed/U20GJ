@@ -5,6 +5,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{32C3BDE6-E125-3128-82C1-25D0441455A3}|Assembly-CSharp.csproj|d:\\git_files\\u20gj\\my project\\assets\\scripts\\c_playerscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{32C3BDE6-E125-3128-82C1-25D0441455A3}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\c_playerscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{32C3BDE6-E125-3128-82C1-25D0441455A3}|Assembly-CSharp.csproj|d:\\git_files\\u20gj\\my project\\assets\\scripts\\colliderextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{32C3BDE6-E125-3128-82C1-25D0441455A3}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\colliderextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,8 +18,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 279,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ColliderExtensions.cs",
+              "DocumentMoniker": "D:\\GIT_FILES\\U20GJ\\My project\\Assets\\Scripts\\ColliderExtensions.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\ColliderExtensions.cs",
+              "ToolTip": "D:\\GIT_FILES\\U20GJ\\My project\\Assets\\Scripts\\ColliderExtensions.cs",
+              "RelativeToolTip": "Assets\\Scripts\\ColliderExtensions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACcAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-08T09:03:43.648Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -24,7 +41,7 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\c_PlayerScript.cs",
               "ToolTip": "D:\\GIT_FILES\\U20GJ\\My project\\Assets\\Scripts\\c_PlayerScript.cs",
               "RelativeToolTip": "Assets\\Scripts\\c_PlayerScript.cs",
-              "ViewState": "AgIAACkAAAAAAAAAAAAwwDwAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABYAAAAAAAAAAAAgwM4AAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-07T19:50:54.279Z",
               "EditorCaption": ""
