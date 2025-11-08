@@ -18,6 +18,7 @@ public class c_PlayerScript : MonoBehaviour
 {
     InputAction InputAction_Move;
     InputAction InputAction_Jump;
+    InputAction InputAction_Snapback;
 
     Rigidbody2D thisRigidbody;
     
@@ -25,23 +26,32 @@ public class c_PlayerScript : MonoBehaviour
 
     MovingState CurrentMovingState;
 
-    private void Start()
+    private void Awake()
     {
         ObjectClipStart();
 
         InputAction_Move = InputSystem.actions.FindAction("Move");
         InputAction_Jump = InputSystem.actions.FindAction("Jump");
+        InputAction_Snapback = InputSystem.actions.FindAction("Snapback");
 
         thisRigidbody = gameObject.GetComponent<Rigidbody2D>();
 
-        CurrentMovingState = MovingState.Running;
+        mesh_SnapbackRenderer = SnapbackGameObject.GetComponent<MeshRenderer>();
+        mesh_SnapbackGlassesRenderer = SnapbackGameObject.transform.GetChild(0).GetComponent<MeshRenderer>();
+    }
 
-        StartCoroutine( GravityStatus() );
+    private void Start()
+    {
+       CurrentMovingState = MovingState.Running;
+
+        SnapbackMeshState(false);
+
+       StartCoroutine( GravityStatus() );
     }
 
     private void Update()
     {
-
+        
 
         PlayerInputUpdate();
 
@@ -50,35 +60,91 @@ public class c_PlayerScript : MonoBehaviour
         */
     }
 
+    
     private void FixedUpdate()
     {
+        
+
         PlayerMoveUpdate();
 
-        print("Velocity: " + thisRigidbody.linearVelocity.x);
+        // print("Velocity: " + thisRigidbody.linearVelocity.x);
     }
+
+    
 
     Vector3 totalMoveVector;
     Vector3 previousVelocity;
     void PlayerMoveUpdate()
     {
+        if(SnapbackPressedDown && CurrentMovingState != MovingState.Snapback)
+        {
+            StartCoroutine( SnapbackLoop() );
+        }
+
         float accelerationRate = 10.0f;
 
         float speedDif = moveSpeed - thisRigidbody.linearVelocity.x;
 
-        print("Speed Dif = " + moveSpeed + " - " + thisRigidbody.linearVelocityX + " = " + speedDif);
+        // print("Speed Dif = " + moveSpeed + " - " + thisRigidbody.linearVelocityX + " = " + speedDif);
 
         float movement = speedDif * accelerationRate;
 
-        print("Movement = " + speedDif + " * " + accelerationRate + " = " + movement);
+        // print("Movement = " + speedDif + " * " + accelerationRate + " = " + movement);
 
         thisRigidbody.AddForce(movement * Vector2.right);
 
-        print(" --- ");
+        // print(" --- ");
 
         if (b_JumpPressed && !isJumping)
         {
             StartCoroutine( Jump() );
         }
+    }
+
+    [SerializeField] GameObject SnapbackGameObject;
+    [SerializeField][Range(1.0f, 5.0f)] float SnapbackMaxTime = 3.0f;
+    private IEnumerator SnapbackLoop()
+    {
+        SnapbackGameObject.transform.position = thisRigidbody.transform.position;
+        SnapbackMeshState(true);
+
+        MovingState priorMovingState = CurrentMovingState;
+        CurrentMovingState = MovingState.Snapback;
+
+        SnapbackPressedDown = false;
+
+        float time = 0f;
+
+        while (time < SnapbackMaxTime)
+        {
+            time += Time.fixedDeltaTime;
+
+            print("Snapback Time: " + time);
+
+            if (SnapbackPressedDown)
+                time = SnapbackMaxTime;
+
+            if (time >= SnapbackMaxTime)
+            {
+                gameObject.transform.position = SnapbackGameObject.transform.position;
+
+                SnapbackMeshState(false);
+
+                CurrentMovingState = priorMovingState;
+            }
+
+            yield return new WaitForFixedUpdate();
+        }
+
+        yield return null;
+    }
+
+    MeshRenderer mesh_SnapbackRenderer;
+    MeshRenderer mesh_SnapbackGlassesRenderer;
+    private void SnapbackMeshState(bool _isEnabled)
+    {
+        mesh_SnapbackRenderer.enabled = _isEnabled;
+        mesh_SnapbackGlassesRenderer.enabled = _isEnabled;
     }
 
     bool isJumping;
@@ -116,7 +182,7 @@ public class c_PlayerScript : MonoBehaviour
 
             thisRigidbody.AddForce(upwardVelocity * Vector2.up);
 
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForFixedUpdate();
         }
 
         isJumping = false;
@@ -149,7 +215,7 @@ public class c_PlayerScript : MonoBehaviour
             thisRigidbody.gravityScale = scalingGravity;
             // print(thisRigidbody.gravityScale);
 
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForFixedUpdate();
         }
 
         print("Reaching Here");
@@ -223,9 +289,26 @@ public class c_PlayerScript : MonoBehaviour
     bool b_JumpPressed;
     void PlayerInputUpdate()
     {
+        SnapbackButtonLogic();
+
         v2_PlayerMovementVector = InputAction_Move.ReadValue<Vector2>();
 
         b_JumpPressed = InputAction_Jump.IsPressed();
+    }
+
+    bool SnapbackPressedDown;
+    bool SnapbackPressedState;
+    bool SnapbackPressedState_Old;
+    void SnapbackButtonLogic()
+    {
+        SnapbackPressedDown = false;
+
+        SnapbackPressedState = InputAction_Snapback.IsPressed();
+
+        if (SnapbackPressedState && !SnapbackPressedState_Old)
+            SnapbackPressedDown = true;
+
+        SnapbackPressedState_Old = SnapbackPressedState;
     }
 
     #endregion
