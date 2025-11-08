@@ -1,43 +1,50 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Controls;
 
 // Hello world :D
 
 public class c_PlayerScript : MonoBehaviour
 {
-    InputActionAsset InputAsset;
     InputAction InputAction_Move;
+    InputAction InputAction_Jump;
+
+    Rigidbody thisRigidbody;
+    [SerializeField] float moveSpeed = 20f;
 
     private void Start()
     {
-        InputAsset.FindActionMap("Player").Enable();
-
         InputAction_Move = InputSystem.actions.FindAction("Move");
-        // InputAction_Move.AddBinding("<Keyboard&Mouse>/WASD");
-        InputAction_Move.Enable();
+        InputAction_Jump = InputSystem.actions.FindAction("Jump");
+
+        thisRigidbody = gameObject.GetComponent<Rigidbody>();
     }
 
     private void Update()
     {
+        
+    }
+
+    private void FixedUpdate()
+    {
         PlayerInputUpdate();
+
+        PlayerMoveUpdate();
+    }
+
+    void PlayerMoveUpdate()
+    {
+        thisRigidbody.MovePosition(gameObject.transform.position + new Vector3(0, 0, moveSpeed * Time.fixedDeltaTime));
     }
 
     #region Player Input
 
     Vector2 v2_PlayerMovementVector;
+    bool b_JumpPressed;
     void PlayerInputUpdate()
     {
-        // v2_PlayerMovementVector = new Vector2();
-
         v2_PlayerMovementVector = InputAction_Move.ReadValue<Vector2>();
 
-        print(InputAction_Move.ReadValue<Vector2>());
-
-        if( v2_PlayerMovementVector != Vector2.zero )
-        {
-            print(v2_PlayerMovementVector);
-        }
+        b_JumpPressed = InputAction_Jump.IsPressed();
     }
 
     #endregion
