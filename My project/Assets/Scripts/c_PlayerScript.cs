@@ -1,6 +1,5 @@
 using System.Collections;
 using System;
-using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -20,8 +19,9 @@ public class c_PlayerScript : MonoBehaviour
     InputAction InputAction_Move;
     InputAction InputAction_Jump;
 
-    Rigidbody thisRigidbody;
-    [SerializeField] float moveSpeed = 100f;
+    Rigidbody2D thisRigidbody;
+    
+    [SerializeField] float moveSpeed = 10f;
 
     MovingState CurrentMovingState;
 
@@ -32,96 +32,89 @@ public class c_PlayerScript : MonoBehaviour
         InputAction_Move = InputSystem.actions.FindAction("Move");
         InputAction_Jump = InputSystem.actions.FindAction("Jump");
 
-        thisRigidbody = gameObject.GetComponent<Rigidbody>();
+        thisRigidbody = gameObject.GetComponent<Rigidbody2D>();
 
         CurrentMovingState = MovingState.Running;
 
-        StartCoroutine(Gravity());
+        StartCoroutine( GravityStatus() );
     }
 
     private void Update()
     {
+
+
         PlayerInputUpdate();
 
+        /*
         ObjectClipUpdate();
+        */
     }
 
     private void FixedUpdate()
     {
         PlayerMoveUpdate();
+
+        print("Velocity: " + thisRigidbody.linearVelocity.x);
     }
 
     Vector3 totalMoveVector;
     Vector3 previousVelocity;
     void PlayerMoveUpdate()
     {
-        previousVelocity = thisRigidbody.linearVelocity;
+        float accelerationRate = 10.0f;
 
-        if(thisRigidbody.linearVelocity.magnitude < moveSpeed )
-        {
-            totalMoveVector = previousVelocity + new Vector3(0, 0, moveSpeed);
+        float speedDif = moveSpeed - thisRigidbody.linearVelocity.x;
 
-            thisRigidbody.AddForce(totalMoveVector - previousVelocity);
-        }
+        print("Speed Dif = " + moveSpeed + " - " + thisRigidbody.linearVelocityX + " = " + speedDif);
 
-        if(b_JumpPressed && !isJumping)
-        {
-            StartCoroutine( Jump() );
-        }
+        float movement = speedDif * accelerationRate;
 
-        
+        print("Movement = " + speedDif + " * " + accelerationRate + " = " + movement);
 
-        // print("New Vel: " + thisRigidbody.linearVelocity.magnitude);
+        thisRigidbody.AddForce(movement * Vector2.right);
 
-        // thisRigidbody.linearVelocity = totalMoveVector - previousVelocity;
-
-        /*
-        previousVelocity = thisRigidbody.linearVelocity;
-
-        totalMoveVector = new Vector3();
-
-        if(CurrentMovingState == MovingState.Running)
-        {
-            totalMoveVector += new Vector3(0, 0, moveSpeed);
-        }
+        print(" --- ");
 
         if (b_JumpPressed && !isJumping)
         {
-            StartCoroutine(Jump());
+            StartCoroutine( Jump() );
         }
-
-        print("New Vel: " + totalMoveVector);
-        print("Old Vel: " + previousVelocity);
-        print("Total Vel: " + (totalMoveVector - previousVelocity));
-        print("---");
-
-        totalMoveVector = (totalMoveVector - previousVelocity) * Time.deltaTime;
-
-        // thisRigidbody.AddForce(totalMoveVector - previousVelocity);
-        thisRigidbody.MovePosition(gameObject.transform.position + totalMoveVector);
-        */
     }
 
     bool isJumping;
     private IEnumerator Jump()
     {
+        if (!touchingGround)
+            yield break;
+
         print("Jumping");
 
         isJumping = true;
 
-        float upwardVelocity = 300.0f;
+        float startingVelocity = 1000f;
+
+        float time_MAX = 0.25f;
+        float time = time_MAX;
 
         touchingGround = false;
+
+        StartCoroutine( JumpScalingGravity() );
 
         // while(b_JumpPressed && !touchingGround)
         while(b_JumpPressed && !touchingGround)
         {
-            upwardVelocity -= Time.fixedDeltaTime * 100.0f;
+            time -= Time.fixedDeltaTime;
 
-            if(upwardVelocity < 0)
-                upwardVelocity = 0;
+            float perc = time / time_MAX;
 
-            thisRigidbody.AddForce(new Vector3(0f, upwardVelocity, 0f));
+            float upwardVelocity = Mathf.Lerp(0f, startingVelocity, perc);
+
+            if(time < 0)
+                time = 0;
+
+            // print(upwardVelocity);
+
+            thisRigidbody.AddForce(upwardVelocity * Vector2.up);
 
             yield return new WaitForEndOfFrame();
         }
@@ -131,13 +124,53 @@ public class c_PlayerScript : MonoBehaviour
         yield return null;
     }
 
-    bool touchingGround = false;
-    private IEnumerator Gravity()
+    private IEnumerator JumpScalingGravity()
     {
+        float time = 0f;
+        float time_MAX = 1.0f;
+
+        float gravityStart = 1f;
+        float gravityEnd = 50f;
+
+        while(time < time_MAX || !touchingGround)
+        {
+            time += Time.fixedDeltaTime;
+            if(time > time_MAX)
+                time = time_MAX;
+
+            float perc = Mathf.Lerp(0f, time_MAX, time / time_MAX);
+
+            float scalingGravity = 25f;
+            if (time > 0f)
+            {
+                scalingGravity = Mathf.Lerp(gravityStart, gravityEnd, perc);
+            }
+
+            thisRigidbody.gravityScale = scalingGravity;
+            // print(thisRigidbody.gravityScale);
+
+            yield return new WaitForEndOfFrame();
+        }
+
+        print("Reaching Here");
+        thisRigidbody.gravityScale = 1.0f;
+        
+        // MoveSpeed is 100f but for some reason capping at 90f. This is just matching that value.
+        thisRigidbody.linearVelocity = 70f * Vector2.right;
+
+        yield return null;
+    }
+
+    bool touchingGround = false;
+    private IEnumerator GravityStatus()
+    {
+        print("STARTING GRAVITY STATUS");
+
         int layerMask = LayerMask.GetMask("Ground");
         float playerHeight = gameObject.transform.localScale.y;
         
-        RaycastHit _hit;
+        //RaycastHit _hit;
+        RaycastHit2D _hit;
 
         while (true)
         {
@@ -146,45 +179,27 @@ public class c_PlayerScript : MonoBehaviour
 
             if (prevY < currY)
             {
-                //print("Air");
+                // print("Air - CurrY");
                 touchingGround = false;
             }
             else
             {
-                if (Physics.Raycast(gameObject.transform.position, Vector3.down, out _hit, playerHeight + 0.1f, layerMask))
+                //if (Physics.Raycast(gameObject.transform.position, Vector3.down, out _hit, playerHeight + 0.1f, layerMask))
+                if (_hit = Physics2D.Raycast(gameObject.transform.position, Vector3.down, playerHeight + 0.1f, layerMask))
                 {
                     Debug.DrawLine(gameObject.transform.position, _hit.point, Color.red);
 
                     if (_hit.distance < playerHeight + 0.1f)
                     {
-                        if(!touchingGround)
-                        {
-                            Vector3 v3_RemoveYVel = thisRigidbody.linearVelocity;
-                            v3_RemoveYVel.y = 0f;
-                            thisRigidbody.linearVelocity = v3_RemoveYVel;
-
-                            print(_hit.point);
-                            /*
-                            Vector3 v3_FinalPosition = thisRigidbody.transform.position;
-                            v3_FinalPosition.y = _hit.point.y + playerHeight;
-                            thisRigidbody.transform.position = v3_FinalPosition;
-                            */
-                        }
-
-                        //print("Touching Ground");
+                        // print("Ground");
                         touchingGround = true;
                     }
                     else
                     {
-                        //print("Air");
+                        // print("Air - Falling");
                         touchingGround = false;
                     }
                 }
-            }
-
-            if(!touchingGround)
-            {
-                thisRigidbody.AddForce(new Vector3(0f, Physics.gravity.y * Time.fixedDeltaTime * 1000f, 0f));
             }
 
             yield return new WaitForEndOfFrame();
