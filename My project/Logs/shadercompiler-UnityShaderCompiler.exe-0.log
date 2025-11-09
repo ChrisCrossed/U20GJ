@@ -1,6 +1,5 @@
-Base path: 'D:/Unity Editors/6000.2.6f2/Editor/Data', plugins path 'D:/Unity Editors/6000.2.6f2/Editor/Data/PlaybackEngines'
+Base path: 'D:/Program FIles/Unity/Editor/6000.2.6f2/Editor/Data', plugins path 'D:/Program FIles/Unity/Editor/6000.2.6f2/Editor/Data/PlaybackEngines'
 Cmd: initializeCompiler
 
 Cmd: initializeCompiler
 
-Cmd: shutdown
