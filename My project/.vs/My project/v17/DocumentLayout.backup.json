@@ -1,14 +1,18 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\GIT_FILES\\U20GJ\\My project\\",
+  "WorkspaceRootPath": "D:\\Projects\\Unity Projects\\CGJ2\\U20GJ\\My project\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{32C3BDE6-E125-3128-82C1-25D0441455A3}|Assembly-CSharp.csproj|d:\\git_files\\u20gj\\my project\\assets\\scripts\\c_playerscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{32C3BDE6-E125-3128-82C1-25D0441455A3}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\c_playerscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{32C3BDE6-E125-3128-82C1-25D0441455A3}|Assembly-CSharp.csproj|d:\\projects\\unity projects\\cgj2\\u20gj\\my project\\assets\\scripts\\backgroundloop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{32C3BDE6-E125-3128-82C1-25D0441455A3}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\backgroundloop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{32C3BDE6-E125-3128-82C1-25D0441455A3}|Assembly-CSharp.csproj|D:\\GIT_FILES\\U20GJ\\My project\\assets\\scripts\\colliderextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{32C3BDE6-E125-3128-82C1-25D0441455A3}|Assembly-CSharp.csproj|D:\\Projects\\Unity Projects\\CGJ2\\U20GJ\\My project\\assets\\scripts\\colliderextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{32C3BDE6-E125-3128-82C1-25D0441455A3}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\colliderextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{32C3BDE6-E125-3128-82C1-25D0441455A3}|Assembly-CSharp.csproj|D:\\Projects\\Unity Projects\\CGJ2\\U20GJ\\My project\\assets\\scripts\\c_playerscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{32C3BDE6-E125-3128-82C1-25D0441455A3}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\c_playerscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,29 +22,43 @@
       "DocumentGroups": [
         {
           "DockedWidth": 279,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BackgroundLoop.cs",
+              "DocumentMoniker": "D:\\Projects\\Unity Projects\\CGJ2\\U20GJ\\My project\\Assets\\Scripts\\BackgroundLoop.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\BackgroundLoop.cs",
+              "ToolTip": "D:\\Projects\\Unity Projects\\CGJ2\\U20GJ\\My project\\Assets\\Scripts\\BackgroundLoop.cs",
+              "RelativeToolTip": "Assets\\Scripts\\BackgroundLoop.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-09T01:25:47.168Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "ColliderExtensions.cs",
-              "DocumentMoniker": "D:\\GIT_FILES\\U20GJ\\My project\\Assets\\Scripts\\ColliderExtensions.cs",
+              "DocumentMoniker": "D:\\Projects\\Unity Projects\\CGJ2\\U20GJ\\My project\\Assets\\Scripts\\ColliderExtensions.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\ColliderExtensions.cs",
-              "ToolTip": "D:\\GIT_FILES\\U20GJ\\My project\\Assets\\Scripts\\ColliderExtensions.cs",
+              "ToolTip": "D:\\Projects\\Unity Projects\\CGJ2\\U20GJ\\My project\\Assets\\Scripts\\ColliderExtensions.cs",
               "RelativeToolTip": "Assets\\Scripts\\ColliderExtensions.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACcAAAAYAAAAAAAAAA==",
+              "ViewState": "AgIAABMAAAAAAAAAAAAgwCcAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-08T09:03:43.648Z"
+              "WhenOpened": "2025-11-08T09:03:43.648Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "c_PlayerScript.cs",
-              "DocumentMoniker": "D:\\GIT_FILES\\U20GJ\\My project\\Assets\\Scripts\\c_PlayerScript.cs",
+              "DocumentMoniker": "D:\\Projects\\Unity Projects\\CGJ2\\U20GJ\\My project\\Assets\\Scripts\\c_PlayerScript.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\c_PlayerScript.cs",
-              "ToolTip": "D:\\GIT_FILES\\U20GJ\\My project\\Assets\\Scripts\\c_PlayerScript.cs",
+              "ToolTip": "D:\\Projects\\Unity Projects\\CGJ2\\U20GJ\\My project\\Assets\\Scripts\\c_PlayerScript.cs",
               "RelativeToolTip": "Assets\\Scripts\\c_PlayerScript.cs",
-              "ViewState": "AgIAAFIAAAAAAAAAAAAUwH0AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAH0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-07T19:50:54.279Z",
               "EditorCaption": ""
